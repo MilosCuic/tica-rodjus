@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import LandingPage from "./components/LandingPage";
 import GameContainer from "./components/GameContainer";
+import VolumeControl from "./components/VolumeControl";
 import bgMusic from "./assets/music/MALI PARADAJZ - SRECAN RODJENDAN  LIGU LIGU  Decije pesme  Pesmice za decu  Rodjendanska pesma.mp3";
 
 export default function App() {
@@ -22,6 +23,7 @@ export default function App() {
   return (
     <div className="min-h-screen">
       <audio ref={audioRef} src={bgMusic} loop preload="auto" volume={0.5} />
+      {started && <VolumeControl audioRef={audioRef} />}
       <AnimatePresence mode="wait">
         {!started ? (
           <motion.div
