@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function VolumeControl({ audioRef }) {
-  const [volume, setVolume] = useState(50);
+  const [volume, setVolume] = useState(10);
   const [muted, setMuted] = useState(false);
   const [showSlider, setShowSlider] = useState(false);
 

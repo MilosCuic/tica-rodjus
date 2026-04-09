@@ -12,7 +12,7 @@ export default function App() {
   const handleStart = () => {
     setStarted(true);
     if (audioRef.current) {
-      audioRef.current.volume = 0.5;
+      audioRef.current.volume = 0.1;
       audioRef.current.currentTime = 0;
       audioRef.current.play().catch((err) => {
         console.warn("Audio play failed:", err);
