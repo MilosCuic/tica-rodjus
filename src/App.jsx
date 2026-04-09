@@ -11,18 +11,20 @@ export default function App() {
 
   const handleStart = () => {
     setStarted(true);
-    if (audioRef.current) {
-      audioRef.current.volume = 0.1;
-      audioRef.current.currentTime = 0;
-      audioRef.current.play().catch((err) => {
-        console.warn("Audio play failed:", err);
-      });
-    }
+    setTimeout(() => {
+      if (audioRef.current) {
+        audioRef.current.volume = 0.1;
+        audioRef.current.currentTime = 0;
+        audioRef.current.play().catch((err) => {
+          console.warn("Audio play failed:", err);
+        });
+      }
+    }, 100);
   };
 
   return (
     <div className="min-h-screen">
-      <audio ref={audioRef} src={bgMusic} loop preload="auto" volume={0.5} />
+      <audio ref={audioRef} src={bgMusic} loop preload="auto" />
       {started && <VolumeControl audioRef={audioRef} />}
       <AnimatePresence mode="wait">
         {!started ? (

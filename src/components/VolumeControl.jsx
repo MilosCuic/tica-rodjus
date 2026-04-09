@@ -27,6 +27,9 @@ export default function VolumeControl({ audioRef }) {
       const newMuted = !prev;
       if (audioRef?.current) {
         audioRef.current.volume = newMuted ? 0 : volume / 100;
+        console.log("Mute toggled:", newMuted, "volume set to:", audioRef.current.volume);
+      } else {
+        console.warn("audioRef.current is null in toggleMute");
       }
       return newMuted;
     });
@@ -38,6 +41,9 @@ export default function VolumeControl({ audioRef }) {
     if (newVol > 0 && muted) setMuted(false);
     if (audioRef?.current) {
       audioRef.current.volume = newVol / 100;
+      console.log("Volume changed to:", newVol, "audio.volume:", audioRef.current.volume);
+    } else {
+      console.warn("audioRef.current is null in handleVolumeChange");
     }
   };
 
