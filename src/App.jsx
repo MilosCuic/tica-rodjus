@@ -7,25 +7,43 @@ import bgMusic from "./assets/music/MALI PARADAJZ - SRECAN RODJENDAN  LIGU LIGU 
 
 export default function App() {
   const [started, setStarted] = useState(false);
-  const audioRef = useRef(null);
+  const audioContextRef = useRef(null);
+  const sourceRef = useRef(null);
+  const gainNodeRef = useRef(null);
 
-  const handleStart = () => {
+  const handleStart = async () => {
     setStarted(true);
-    setTimeout(() => {
-      if (audioRef.current) {
-        audioRef.current.volume = 0.1;
-        audioRef.current.currentTime = 0;
-        audioRef.current.play().catch((err) => {
-          console.warn("Audio play failed:", err);
-        });
-      }
-    }, 100);
+    
+    // Kreiraj Web Audio API context
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    const audioCtx = new AudioContext();
+    audioContextRef.current = audioCtx;
+
+    // Fetch i dekoduj audio
+    const response = await fetch(bgMusic);
+    const arrayBuffer = await response.arrayBuffer();
+    const audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
+
+    // Kreiraj source i gain node
+    const source = audioCtx.createBufferSource();
+    source.buffer = audioBuffer;
+    source.loop = true;
+
+    const gainNode = audioCtx.createGain();
+    gainNode.gain.value = 0.1; // Početna jačina 10%
+
+    source.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+
+    sourceRef.current = source;
+    gainNodeRef.current = gainNode;
+
+    source.start(0);
   };
 
   return (
     <div className="min-h-screen">
-      <audio ref={audioRef} src={bgMusic} loop preload="auto" />
-      {started && <VolumeControl audioRef={audioRef} />}
+      {started && <VolumeControl gainNodeRef={gainNodeRef} />}
       <AnimatePresence mode="wait">
         {!started ? (
           <motion.div

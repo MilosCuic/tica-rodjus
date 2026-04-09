@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-export default function VolumeControl({ audioRef }) {
+export default function VolumeControl({ gainNodeRef }) {
   const [volume, setVolume] = useState(10);
   const [muted, setMuted] = useState(false);
   const [showSlider, setShowSlider] = useState(false);
@@ -15,21 +15,21 @@ export default function VolumeControl({ audioRef }) {
   }, []);
 
   useEffect(() => {
-    if (audioRef?.current) {
+    if (gainNodeRef?.current) {
       const newVolume = muted ? 0 : volume / 100;
-      audioRef.current.volume = newVolume;
+      gainNodeRef.current.gain.value = newVolume;
       console.log("Volume updated:", newVolume, "muted:", muted);
     }
-  }, [volume, muted, audioRef]);
+  }, [volume, muted, gainNodeRef]);
 
   const toggleMute = () => {
     setMuted((prev) => {
       const newMuted = !prev;
-      if (audioRef?.current) {
-        audioRef.current.volume = newMuted ? 0 : volume / 100;
-        console.log("Mute toggled:", newMuted, "volume set to:", audioRef.current.volume);
+      if (gainNodeRef?.current) {
+        gainNodeRef.current.gain.value = newMuted ? 0 : volume / 100;
+        console.log("Mute toggled:", newMuted, "gain set to:", gainNodeRef.current.gain.value);
       } else {
-        console.warn("audioRef.current is null in toggleMute");
+        console.warn("gainNodeRef.current is null in toggleMute");
       }
       return newMuted;
     });
@@ -39,11 +39,11 @@ export default function VolumeControl({ audioRef }) {
     const newVol = parseInt(e.target.value, 10);
     setVolume(newVol);
     if (newVol > 0 && muted) setMuted(false);
-    if (audioRef?.current) {
-      audioRef.current.volume = newVol / 100;
-      console.log("Volume changed to:", newVol, "audio.volume:", audioRef.current.volume);
+    if (gainNodeRef?.current) {
+      gainNodeRef.current.gain.value = newVol / 100;
+      console.log("Volume changed to:", newVol, "gain.value:", gainNodeRef.current.gain.value);
     } else {
-      console.warn("audioRef.current is null in handleVolumeChange");
+      console.warn("gainNodeRef.current is null in handleVolumeChange");
     }
   };
 
