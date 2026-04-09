@@ -5,6 +5,14 @@ export default function VolumeControl({ audioRef }) {
   const [volume, setVolume] = useState(10);
   const [muted, setMuted] = useState(false);
   const [showSlider, setShowSlider] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   useEffect(() => {
     if (audioRef?.current) {
@@ -28,8 +36,8 @@ export default function VolumeControl({ audioRef }) {
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: 0.5 }}
-      onMouseEnter={() => setShowSlider(true)}
-      onMouseLeave={() => setShowSlider(false)}
+      onMouseEnter={() => !isMobile && setShowSlider(true)}
+      onMouseLeave={() => !isMobile && setShowSlider(false)}
     >
       {/* Mute/Unmute button */}
       <motion.button
@@ -48,9 +56,9 @@ export default function VolumeControl({ audioRef }) {
         </span>
       </motion.button>
 
-      {/* Volume slider */}
+      {/* Volume slider - uvek vidljiv na mobilnom, hover na desktopu */}
       <AnimatePresence>
-        {showSlider && (
+        {(isMobile || showSlider) && (
           <motion.div
             className="flex items-center gap-2 px-3 py-2 rounded-full"
             style={{
