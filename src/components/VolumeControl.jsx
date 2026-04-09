@@ -16,18 +16,29 @@ export default function VolumeControl({ audioRef }) {
 
   useEffect(() => {
     if (audioRef?.current) {
-      audioRef.current.volume = muted ? 0 : volume / 100;
+      const newVolume = muted ? 0 : volume / 100;
+      audioRef.current.volume = newVolume;
+      console.log("Volume updated:", newVolume, "muted:", muted);
     }
   }, [volume, muted, audioRef]);
 
   const toggleMute = () => {
-    setMuted((prev) => !prev);
+    setMuted((prev) => {
+      const newMuted = !prev;
+      if (audioRef?.current) {
+        audioRef.current.volume = newMuted ? 0 : volume / 100;
+      }
+      return newMuted;
+    });
   };
 
   const handleVolumeChange = (e) => {
     const newVol = parseInt(e.target.value, 10);
     setVolume(newVol);
     if (newVol > 0 && muted) setMuted(false);
+    if (audioRef?.current) {
+      audioRef.current.volume = newVol / 100;
+    }
   };
 
   return (
