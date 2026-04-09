@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { resumeAudio, playPunch, playKiss } from "../../utils/sfx";
 
 import seka1 from "../../assets/photos/seka1.jpeg";
 import seka2 from "../../assets/photos/seka2.jpeg";
@@ -62,8 +63,10 @@ export default function Level6_Seka({ onNext }) {
   const [punching, setPunching] = useState(false);
   const [showHearts, setShowHearts] = useState(false);
 
-  const handlePunch = () => {
+  const handlePunch = async () => {
     if (punching) return;
+    await resumeAudio();
+    playPunch();
     setPunching(true);
     setTimeout(() => {
       setPunching(false);
@@ -71,7 +74,9 @@ export default function Level6_Seka({ onNext }) {
     }, 900);
   };
 
-  const handleKiss = () => {
+  const handleKiss = async () => {
+    await resumeAudio();
+    playKiss();
     setShowHearts(true);
     setTimeout(() => setStage("done"), 400);
   };

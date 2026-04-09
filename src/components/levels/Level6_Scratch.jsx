@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Confetti from "react-confetti";
 import { useWindowSize } from "../../hooks/useWindowSize";
+import { resumeAudio, playScratchTick, playWinChime } from "../../utils/sfx";
 
 const MESSAGE = "Zara vaučer na 6000din!! 🛍️";
 const BIG_EMOJI = "🎁";
@@ -11,6 +12,8 @@ export default function Level6_Scratch({ onNext }) {
   const [scratched, setScratched] = useState(0);
   const [revealed, setRevealed] = useState(false);
   const isDrawing = useRef(false);
+  const lastScratchSfx = useRef(0);
+  const prizeChimePlayed = useRef(false);
   const { width, height } = useWindowSize();
 
   useEffect(() => {
@@ -54,6 +57,11 @@ export default function Level6_Scratch({ onNext }) {
   const scratch = (e) => {
     if (!isDrawing.current) return;
     e.preventDefault();
+    const now = performance.now();
+    if (now - lastScratchSfx.current > 95) {
+      lastScratchSfx.current = now;
+      resumeAudio().then(() => playScratchTick());
+    }
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
     const { x, y } = getPos(e, canvas);
@@ -73,7 +81,13 @@ export default function Level6_Scratch({ onNext }) {
     }
     const pct = (transparent / (data.length / 4)) * 100;
     setScratched(Math.min(100, Math.round(pct)));
-    if (pct > 70) setRevealed(true);
+    if (pct > 70) {
+      if (!prizeChimePlayed.current) {
+        prizeChimePlayed.current = true;
+        resumeAudio().then(() => playWinChime());
+      }
+      setRevealed(true);
+    }
   };
 
   return (

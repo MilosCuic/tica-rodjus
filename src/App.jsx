@@ -1,13 +1,22 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import LandingPage from "./components/LandingPage";
 import GameContainer from "./components/GameContainer";
+import bgMusic from "./assets/music/MALI PARADAJZ - SRECAN RODJENDAN  LIGU LIGU  Decije pesme  Pesmice za decu  Rodjendanska pesma.mp3";
 
 export default function App() {
   const [started, setStarted] = useState(false);
+  const audioRef = useRef(null);
+
+  useEffect(() => {
+    if (audioRef.current && started) {
+      audioRef.current.play().catch(() => {});
+    }
+  }, [started]);
 
   return (
     <div className="min-h-screen">
+      <audio ref={audioRef} src={bgMusic} loop preload="auto" />
       <AnimatePresence mode="wait">
         {!started ? (
           <motion.div

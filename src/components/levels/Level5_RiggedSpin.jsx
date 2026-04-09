@@ -1,8 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { SPINNER_OPTIONS_1, WINNING_INDEX_1 } from "../../data/gameData";
 import Confetti from "react-confetti";
 import { useWindowSize } from "../../hooks/useWindowSize";
+import {
+  resumeAudio,
+  startSpinnerTicks,
+  stopSpinnerTicks,
+  playWinChime,
+} from "../../utils/sfx";
 
 const COLORS = [
   "#e91e8c", "#a855f7", "#3b82f6", "#10b981",
@@ -26,21 +32,27 @@ export default function Level5_RiggedSpin({ onNext }) {
   const winIdx = WINNING_INDEX_1;
   const segAngle = 360 / options.length;
 
-  const spin = () => {
+  const spin = async () => {
     if (spinning || revealed) return;
+    await resumeAudio();
     setSpinning(true);
+    startSpinnerTicks(4500);
     const fullSpins = 5 + Math.floor(Math.random() * 3);
     const winAngle = 360 - (winIdx * segAngle + segAngle / 2);
     const target = rotation + fullSpins * 360 + ((winAngle - rotation % 360 + 360) % 360);
     setRotation(target);
     setTimeout(() => {
+      stopSpinnerTicks();
       setSpinning(false);
       setRevealed(true);
+      playWinChime();
     }, 4500);
   };
 
   const WHEEL_SIZE = "min(440px, 82vw, 72vh)";
   const isMobile = width < 640;
+
+  useEffect(() => () => stopSpinnerTicks(), []);
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-4 level-transition"
