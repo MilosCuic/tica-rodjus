@@ -8,15 +8,20 @@ export default function App() {
   const [started, setStarted] = useState(false);
   const audioRef = useRef(null);
 
-  useEffect(() => {
-    if (audioRef.current && started) {
-      audioRef.current.play().catch(() => {});
+  const handleStart = () => {
+    setStarted(true);
+    if (audioRef.current) {
+      audioRef.current.volume = 0.5;
+      audioRef.current.currentTime = 0;
+      audioRef.current.play().catch((err) => {
+        console.warn("Audio play failed:", err);
+      });
     }
-  }, [started]);
+  };
 
   return (
     <div className="min-h-screen">
-      <audio ref={audioRef} src={bgMusic} loop preload="auto" />
+      <audio ref={audioRef} src={bgMusic} loop preload="auto" volume={0.5} />
       <AnimatePresence mode="wait">
         {!started ? (
           <motion.div
@@ -25,7 +30,7 @@ export default function App() {
             exit={{ opacity: 0, scale: 0.97 }}
             transition={{ duration: 0.4 }}
           >
-            <LandingPage onStart={() => setStarted(true)} />
+            <LandingPage onStart={handleStart} />
           </motion.div>
         ) : (
           <motion.div
