@@ -61,6 +61,67 @@ export default function GameContainer({ onRestart }) {
           )}
         </motion.div>
       </AnimatePresence>
+
+      {/* DEV MODE NAVIGATION - ukloniti pre produkcije */}
+      <motion.div
+        className="fixed bottom-5 left-0 right-0 z-50 flex justify-center gap-3"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.5 }}
+      >
+        {level > 1 && (
+          <button
+            onClick={() => setLevel((l) => l - 1)}
+            className="font-body text-xs px-4 py-2 rounded-full transition-all"
+            style={{
+              background: "rgba(255,255,255,0.07)",
+              border: "1px solid rgba(255,255,255,0.15)",
+              color: "rgba(255,255,255,0.4)",
+            }}
+            onMouseEnter={(e) => { 
+              e.currentTarget.style.color = "rgba(255,255,255,0.8)"; 
+              e.currentTarget.style.background = "rgba(255,255,255,0.12)"; 
+            }}
+            onMouseLeave={(e) => { 
+              e.currentTarget.style.color = "rgba(255,255,255,0.4)"; 
+              e.currentTarget.style.background = "rgba(255,255,255,0.07)"; 
+            }}
+          >
+            ← Nazad
+          </button>
+        )}
+        <span
+          className="font-body text-xs px-3 py-2 rounded-full"
+          style={{ 
+            color: "rgba(255,255,255,0.2)", 
+            background: "rgba(255,255,255,0.04)", 
+            border: "1px solid rgba(255,255,255,0.08)" 
+          }}
+        >
+          {level} / {LEVELS.length}
+        </span>
+        {!isLast && (
+          <button
+            onClick={() => setLevel((l) => l + 1)}
+            className="font-body text-xs px-4 py-2 rounded-full transition-all"
+            style={{
+              background: "rgba(255,255,255,0.07)",
+              border: "1px solid rgba(255,255,255,0.15)",
+              color: "rgba(255,255,255,0.4)",
+            }}
+            onMouseEnter={(e) => { 
+              e.currentTarget.style.color = "rgba(255,255,255,0.8)"; 
+              e.currentTarget.style.background = "rgba(255,255,255,0.12)"; 
+            }}
+            onMouseLeave={(e) => { 
+              e.currentTarget.style.color = "rgba(255,255,255,0.4)"; 
+              e.currentTarget.style.background = "rgba(255,255,255,0.07)"; 
+            }}
+          >
+            Preskoči →
+          </button>
+        )}
+      </motion.div>
     </div>
   );
 }
