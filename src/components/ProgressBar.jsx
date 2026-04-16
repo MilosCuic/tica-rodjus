@@ -28,7 +28,7 @@ export default function ProgressBar({ currentLevel }) {
         })}
       </div>
       <span className="text-xs text-yellow-300 font-bold font-body whitespace-nowrap">
-        🎂 Tijana
+        🎂 Nina!
       </span>
     </div>
   );

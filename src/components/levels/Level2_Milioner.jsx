@@ -2,19 +2,18 @@ import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Confetti from "react-confetti";
 import { useWindowSize } from "../../hooks/useWindowSize";
-import cekaImg from "../../assets/photos/ceka.jpeg";
+import tetaImg from "../../assets/photos/ceka.jpeg"; // Placeholder - zameni sa tetom
 
 const ESCAPE_TEXTS = [
-  "Jesi ti retardirana?! 😱",
-  "Sestro drži me! 🙈",
-  "Sestro pašću ti! 😬",
-  "Još maloooo... 😅",
-  "Još jako majoooooo! 🏃💨",
+  "Termini su popunjeni! 🙅‍♀️",
+  "Nema šanse danas! 😅",
+  "Možda sutra? 🤷‍♀️",
+  "Ma sada će teta tebi preko reda! 😉",
 ];
-const LOVE_TEXT = "Volim teeeee ❤️";
+const FINAL_TEXT = "Evo ga! Termin za tebe! ✨";
 
-const ESCAPES_NEEDED = 5;
-const IMG_SIZE = 90;
+const ESCAPES_NEEDED = 4;
+const IMG_SIZE = 120;
 
 function randomPos(arenaW, arenaH, exclude = null) {
   const pad = IMG_SIZE + 24;
@@ -29,37 +28,157 @@ function randomPos(arenaW, arenaH, exclude = null) {
   return { x: arenaW / 2, y: arenaH / 2 };
 }
 
-function MapBg({ w, h }) {
+// Frizerski salon pozadina - sketch style
+function SalonBg({ w, h }) {
   return (
     <svg width={w} height={h} style={{ position: "absolute", inset: 0 }}>
-      <rect width={w} height={h} fill="#1e0a3c" />
-      <rect x={0} y={h * 0.45} width={w} height={h * 0.1} fill="#2a1650" />
-      <rect x={w * 0.45} y={0} width={w * 0.1} height={h} fill="#2a1650" />
-      {Array.from({ length: 8 }, (_, i) => (
-        <rect key={`rh${i}`} x={i * (w / 7) + 10} y={h * 0.495} width={w / 14} height={4} fill="rgba(255,215,0,0.3)" rx={2} />
+      {/* Gradient background */}
+      <defs>
+        <linearGradient id="salonGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style={{ stopColor: "#1a0533", stopOpacity: 1 }} />
+          <stop offset="100%" style={{ stopColor: "#2d1155", stopOpacity: 1 }} />
+        </linearGradient>
+        <pattern id="dots" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+          <circle cx="2" cy="2" r="1" fill="rgba(233,30,140,0.1)" />
+        </pattern>
+      </defs>
+      
+      <rect width={w} height={h} fill="url(#salonGrad)" />
+      <rect width={w} height={h} fill="url(#dots)" />
+
+      {/* Podloga - tile pattern */}
+      {Array.from({ length: Math.ceil(w / 60) }, (_, i) => (
+        <line key={`fl${i}`} x1={i * 60} y1={h * 0.85} x2={i * 60} y2={h} stroke="rgba(168,85,247,0.15)" strokeWidth={1.5} />
       ))}
-      {Array.from({ length: 6 }, (_, i) => (
-        <rect key={`rv${i}`} x={w * 0.495} y={i * (h / 5) + 10} width={4} height={h / 10} fill="rgba(255,215,0,0.3)" rx={2} />
-      ))}
-      {Array.from({ length: 4 }, (_, i) => (
-        <rect key={`p1${i}`} x={30 + i * 70} y={30} width={55} height={90} fill="none" stroke="rgba(233,30,140,0.25)" strokeWidth={1.5} rx={3} />
-      ))}
-      {Array.from({ length: 4 }, (_, i) => (
-        <rect key={`p2${i}`} x={w - 330 + i * 70} y={h - 120} width={55} height={90} fill="none" stroke="rgba(233,30,140,0.25)" strokeWidth={1.5} rx={3} />
-      ))}
-      <rect x={w - 160} y={20} width={140} height={100} fill="#2d1155" stroke="rgba(168,85,247,0.4)" strokeWidth={2} rx={6} />
-      <text x={w - 90} y={75} textAnchor="middle" fill="rgba(168,85,247,0.6)" fontSize={11} fontFamily="Poppins">ZGRADA</text>
-      <rect x={20} y={h - 120} width={120} height={100} fill="#1a0a40" stroke="rgba(233,30,140,0.4)" strokeWidth={2} rx={6} />
-      <rect x={30} y={h - 110} width={45} height={35} fill="#0d0620" stroke="rgba(233,30,140,0.3)" strokeWidth={1.5} rx={3} />
-      <rect x={85} y={h - 110} width={45} height={35} fill="#0d0620" stroke="rgba(233,30,140,0.3)" strokeWidth={1.5} rx={3} />
-      <text x={80} y={h - 40} textAnchor="middle" fill="rgba(233,30,140,0.6)" fontSize={11} fontFamily="Poppins">GARAŽA</text>
-      {[[w * 0.3, h * 0.25], [w * 0.7, h * 0.25], [w * 0.3, h * 0.75], [w * 0.7, h * 0.75]].map(([cx, cy], i) => (
-        <g key={`t${i}`}>
-          <circle cx={cx} cy={cy} r={18} fill="rgba(16,185,129,0.2)" stroke="rgba(16,185,129,0.3)" strokeWidth={1} />
-          <circle cx={cx} cy={cy} r={10} fill="rgba(16,185,129,0.15)" />
-        </g>
-      ))}
-      <circle cx={w * 0.5} cy={h * 0.5} r={5} fill="#ffd700" opacity={0.7} />
+      
+      {/* Zidovi */}
+      <rect x={20} y={h * 0.1} width={w - 40} height={h * 0.75} fill="rgba(45,17,85,0.3)" stroke="rgba(168,85,247,0.4)" strokeWidth={2} rx={8} />
+
+      {/* Ogledala - 3 velika */}
+      {[0.2, 0.5, 0.8].map((xPos, i) => {
+        const x = w * xPos;
+        const mirrorW = Math.min(w * 0.18, 110);
+        const mirrorH = Math.min(h * 0.35, 140);
+        const y = h * 0.25;
+        return (
+          <g key={`mirror${i}`}>
+            {/* Okvir ogledala */}
+            <rect 
+              x={x - mirrorW / 2} 
+              y={y} 
+              width={mirrorW} 
+              height={mirrorH} 
+              fill="rgba(233,30,140,0.15)" 
+              stroke="#e91e8c" 
+              strokeWidth={3} 
+              rx={8}
+            />
+            {/* Staklo - refleksija */}
+            <rect 
+              x={x - mirrorW / 2 + 5} 
+              y={y + 5} 
+              width={mirrorW - 10} 
+              height={mirrorH - 10} 
+              fill="rgba(168,85,247,0.2)" 
+              stroke="rgba(255,255,255,0.3)" 
+              strokeWidth={1} 
+              rx={5}
+            />
+            {/* Shine effect */}
+            <line 
+              x1={x - mirrorW / 2 + 10} 
+              y1={y + 15} 
+              x2={x - mirrorW / 2 + 25} 
+              y2={y + 35} 
+              stroke="rgba(255,255,255,0.4)" 
+              strokeWidth={2} 
+              strokeLinecap="round"
+            />
+            {/* Stolica ispod */}
+            <rect 
+              x={x - 18} 
+              y={y + mirrorH + 10} 
+              width={36} 
+              height={45} 
+              fill="rgba(233,30,140,0.25)" 
+              stroke="rgba(233,30,140,0.5)" 
+              strokeWidth={2} 
+              rx={4}
+            />
+            {/* Noga stolice */}
+            <line 
+              x1={x} 
+              y1={y + mirrorH + 55} 
+              x2={x} 
+              y2={y + mirrorH + 75} 
+              stroke="rgba(233,30,140,0.6)" 
+              strokeWidth={4} 
+              strokeLinecap="round"
+            />
+          </g>
+        );
+      })}
+
+      {/* Polica sa proizvodima - gore desno */}
+      <g>
+        <rect x={w - 140} y={30} width={120} height={80} fill="rgba(16,185,129,0.15)" stroke="rgba(16,185,129,0.4)" strokeWidth={2} rx={4} />
+        {/* Flasice */}
+        {[0, 1, 2, 3].map(i => (
+          <rect 
+            key={`bottle${i}`} 
+            x={w - 130 + i * 28} 
+            y={45} 
+            width={20} 
+            height={45} 
+            fill="rgba(16,185,129,0.3)" 
+            stroke="rgba(16,185,129,0.6)" 
+            strokeWidth={1.5} 
+            rx={2}
+          />
+        ))}
+      </g>
+
+      {/* Makaze i cetkice - levo */}
+      <g>
+        {/* Makaze */}
+        <line x1={35} y1={50} x2={55} y2={70} stroke="#ffd700" strokeWidth={3} strokeLinecap="round" />
+        <line x1={55} y1={50} x2={35} y2={70} stroke="#ffd700" strokeWidth={3} strokeLinecap="round" />
+        <circle cx={45} cy={60} r={3} fill="#ffd700" />
+        
+        {/* Cetkice */}
+        {[0, 1, 2].map(i => (
+          <g key={`brush${i}`}>
+            <line 
+              x1={70 + i * 15} 
+              y1={45} 
+              x2={70 + i * 15} 
+              y2={75} 
+              stroke="rgba(168,85,247,0.6)" 
+              strokeWidth={2.5} 
+              strokeLinecap="round"
+            />
+            <circle cx={70 + i * 15} cy={42} r={4} fill="rgba(233,30,140,0.5)" />
+          </g>
+        ))}
+      </g>
+
+      {/* Sijalice - gore */}
+      {[0.25, 0.5, 0.75].map((xPos, i) => {
+        const x = w * xPos;
+        return (
+          <g key={`light${i}`}>
+            <circle cx={x} cy={20} r={8} fill="rgba(255,215,0,0.3)" stroke="#ffd700" strokeWidth={2} />
+            <circle cx={x} cy={20} r={4} fill="#ffd700" opacity={0.6} />
+            {/* Svetlost */}
+            <line x1={x} y1={28} x2={x} y2={h * 0.4} stroke="rgba(255,215,0,0.1)" strokeWidth={30} />
+          </g>
+        );
+      })}
+
+      {/* Dekorativni elementi */}
+      <text x={w / 2} y={h * 0.92} textAnchor="middle" fill="rgba(233,30,140,0.4)" fontSize={14} fontFamily="Poppins" fontWeight="700">
+        💇‍♀️ Salon Ljepote 💅
+      </text>
     </svg>
   );
 }
@@ -80,13 +199,15 @@ function SpeechBubble({ text, permanent }) {
         background: "white",
         color: "#1a0533",
         borderRadius: 12,
-        padding: "6px 12px",
-        fontSize: 12,
+        padding: "8px 14px",
+        fontSize: 13,
         fontWeight: 700,
         fontFamily: "Poppins, sans-serif",
         whiteSpace: "nowrap",
         boxShadow: "0 4px 15px rgba(0,0,0,0.4)",
         zIndex: 20,
+        maxWidth: "200px",
+        textAlign: "center",
       }}
     >
       {text}
@@ -107,7 +228,7 @@ function SpeechBubble({ text, permanent }) {
 
 const FLEE_RADIUS = 110;
 
-export default function Level2_UhvatiCeku({ onNext }) {
+export default function Level2_ZakaziTermin({ onNext }) {
   const arenaRef = useRef(null);
   const [arenaSize, setArenaSize] = useState({ w: 600, h: 400 });
   const [pos, setPos] = useState(null);
@@ -174,8 +295,6 @@ export default function Level2_UhvatiCeku({ onNext }) {
     if (caught) return;
 
     if (!canCatch) {
-      // Na touch uređaju: tap = beg
-      // Na desktopu: klik se ignoriše dok miš nije triggerovao 5 bekstava
       triggerEscape();
       return;
     } else {
@@ -190,7 +309,7 @@ export default function Level2_UhvatiCeku({ onNext }) {
         <>
           <Confetti width={width} height={height} recycle={false} numberOfPieces={400} colors={["#ffd700", "#e91e8c", "#a855f7", "#fff", "#10b981"]} />
           <div className="fixed inset-0 pointer-events-none z-40 overflow-hidden">
-            {["🎈", "🎉", "🎊", "💕", "🌸", "✨", "🎈", "🎊"].map((emoji, i) => (
+            {["💇‍♀️", "✨", "💕", "🎉", "💅", "🌸", "💖", "✂️"].map((emoji, i) => (
               <motion.div
                 key={i}
                 className="absolute text-4xl"
@@ -211,17 +330,17 @@ export default function Level2_UhvatiCeku({ onNext }) {
       </motion.p>
       <motion.h2 className="font-display text-3xl md:text-4xl font-bold text-gradient mb-1 text-center"
         initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>
-        Uhvati Cekuuu! 🏃
+        Zakaži Termin! 💇‍♀️
       </motion.h2>
       <motion.p className="font-body text-purple-300 mb-3 text-center text-sm"
         initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}>
         {!started
-          ? (isTouch ? "Tapni na Čeku da je uhvatiš... ako možeš! 😏" : "Priđi mišem Čeki... ako smeš! 😏")
+          ? (isTouch ? "Tapni na tetu da zakažeš termin... 💅" : "Priđi tetki da zakažeš termin... 💅")
           : canCatch
-          ? (isTouch ? "🎯 Sada je možeš uhvatiti! Tapni je!" : "🎯 Sada je možeš uhvatiti! Klikni je!")
+          ? (isTouch ? "🎯 Sada možeš da zakažeš! Tapni!" : "🎯 Sada možeš da zakažeš! Klikni!")
           : (isTouch
-              ? `Tapni je! Još ${ESCAPES_NEEDED - escapes} bekstav${ESCAPES_NEEDED - escapes === 1 ? "" : "a"}...`
-              : `Priđi joj! Još ${ESCAPES_NEEDED - escapes} bekstav${ESCAPES_NEEDED - escapes === 1 ? "" : "a"}...`)}
+              ? `Tapni je! Još ${ESCAPES_NEEDED - escapes}...`
+              : `Priđi joj! Još ${ESCAPES_NEEDED - escapes}...`)}
       </motion.p>
 
       {started && !caught && (
@@ -244,7 +363,7 @@ export default function Level2_UhvatiCeku({ onNext }) {
           onClick={() => setStarted(true)}
           initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}
         >
-          🗺️ Otvori Mapu!
+          💇‍♀️ Uđi u Salon!
         </motion.button>
       ) : (
         <motion.div
@@ -262,7 +381,7 @@ export default function Level2_UhvatiCeku({ onNext }) {
           transition={{ duration: 0.4 }}
           onMouseMove={handleMouseMove}
         >
-          <MapBg w={arenaSize.w} h={arenaSize.h} />
+          <SalonBg w={arenaSize.w} h={arenaSize.h} />
 
           {pos && !caught && (
             <motion.div
@@ -288,16 +407,16 @@ export default function Level2_UhvatiCeku({ onNext }) {
                 )}
               </AnimatePresence>
 
-              {/* "Volim teeeee" bubble — permanent kad može da se uhvati */}
+              {/* "Evo ga! Termin za tebe!" bubble — permanent kad može da se uhvati */}
               <AnimatePresence>
                 {canCatch && (
-                  <SpeechBubble key="love" text={LOVE_TEXT} permanent />
+                  <SpeechBubble key="final" text={FINAL_TEXT} permanent />
                 )}
               </AnimatePresence>
 
               <img
-                src={cekaImg}
-                alt="Čeka"
+                src={tetaImg}
+                alt="Teta frizerka"
                 draggable={false}
                 style={{
                   width: IMG_SIZE,
@@ -317,7 +436,7 @@ export default function Level2_UhvatiCeku({ onNext }) {
                   animate={{ scale: [1, 1.4, 1], opacity: [1, 0.6, 1] }}
                   transition={{ duration: 0.7, repeat: Infinity }}
                 >
-                  🎯
+                  💇‍♀️
                 </motion.div>
               )}
             </motion.div>
@@ -327,19 +446,24 @@ export default function Level2_UhvatiCeku({ onNext }) {
             {caught && (
               <motion.div
                 className="absolute inset-0 flex flex-col items-center justify-center z-20"
-                style={{ background: "rgba(26,5,51,0.75)", backdropFilter: "blur(4px)" }}
+                style={{ background: "rgba(26,5,51,0.85)", backdropFilter: "blur(4px)" }}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
               >
                 <motion.div className="text-7xl mb-2"
                   initial={{ scale: 0 }} animate={{ scale: 1 }}
                   transition={{ type: "spring", bounce: 0.6, delay: 0.1 }}>
-                  🎉
+                  💇‍♀️
                 </motion.div>
                 <motion.p className="font-display text-2xl font-bold text-gradient"
                   initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 }}>
-                  Uhvatila si je!
+                  Zakazano! ✨
+                </motion.p>
+                <motion.p className="font-body text-purple-200 text-sm mt-2"
+                  initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+                  transition={{ delay: 0.5 }}>
+                  Čeka te teta! 💕
                 </motion.p>
               </motion.div>
             )}
