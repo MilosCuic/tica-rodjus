@@ -18,12 +18,18 @@ const CORRECT_ID = 3;
 export default function Level1_Dobrodoslica({ onNext }) {
   const [wrongIds, setWrongIds] = useState([]); // slike koje su pogrešno kliknute
   const [answered, setAnswered] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
   const { width, height } = useWindowSize();
 
   const handleSelect = (id) => {
     if (answered) return;
     if (id === CORRECT_ID) {
       setAnswered(true);
+    } else if (id === 4) {
+      // Slika 4 — prikaži popup "Ma pravog nindzuuu!"
+      setShowPopup(true);
+      setTimeout(() => setShowPopup(false), 2500);
+      setWrongIds((prev) => prev.includes(id) ? prev : [...prev, id]);
     } else {
       // Dodaj u wrong listu ako već nije tu
       setWrongIds((prev) => prev.includes(id) ? prev : [...prev, id]);
@@ -32,6 +38,35 @@ export default function Level1_Dobrodoslica({ onNext }) {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-4 py-24 level-transition relative">
+      {/* Popup za sliku 4 */}
+      <AnimatePresence>
+        {showPopup && (
+          <motion.div
+            className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.div
+              className="font-display font-black text-center px-8 py-6 rounded-3xl"
+              style={{
+                fontSize: "clamp(2rem, 6vw, 3.5rem)",
+                background: "linear-gradient(135deg, #e91e8c, #a855f7)",
+                color: "white",
+                boxShadow: "0 0 60px rgba(233,30,140,0.8)",
+                border: "3px solid rgba(255,255,255,0.3)",
+              }}
+              initial={{ scale: 0.5, rotate: -10 }}
+              animate={{ scale: 1, rotate: 0 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              transition={{ type: "spring", bounce: 0.5 }}
+            >
+              Ma pravog nindzuuu! 🥷
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Konfeti vatromet kad je tačno */}
       {answered && (
         <Confetti
@@ -121,11 +156,25 @@ export default function Level1_Dobrodoslica({ onNext }) {
                 ease: "easeInOut",
               } : {}}
             >
-              <img
-                src={opt.src}
-                alt=""
-                style={{ width: "100%", height: "100%", objectFit: "cover" }}
-              />
+              <div style={{ position: "relative", width: "100%", height: "100%" }}>
+                <img
+                  src={opt.src}
+                  alt=""
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                />
+                {/* Prekrij watermark sa providnim overlay-om */}
+                <div
+                  style={{
+                    position: "absolute",
+                    bottom: 0,
+                    right: 0,
+                    width: "40%",
+                    height: "15%",
+                    background: "linear-gradient(135deg, rgba(26,5,51,0.7), rgba(61,10,45,0.7))",
+                    backdropFilter: "blur(8px)",
+                  }}
+                />
+              </div>
               {/* Crveni overlay za pogrešne */}
               {isWrong && !answered && (
                 <div
