@@ -244,7 +244,7 @@ function SalonBg({ w, h, isMobile }) {
 
       {/* Dekorativni elementi */}
       <text x={w / 2} y={h * 0.92} textAnchor="middle" fill="rgba(233,30,140,0.4)" fontSize={isMobile ? 11 : 14} fontFamily="Poppins" fontWeight="700">
-        💇‍♀️ Salon Ljepote 💅
+        💇‍♀️ Salon kod tedke 💅
       </text>
     </svg>
   );
@@ -508,18 +508,22 @@ export default function Level2_ZakaziTermin({ onNext }) {
         >
           <SalonBg w={arenaSize.w} h={arenaSize.h} isMobile={isMobile} />
 
-          {/* Centralni speech bubbles */}
-          <AnimatePresence>
-            {bubbleVisible && escapes > 0 && escapes <= ESCAPE_TEXTS.length && (
-              <SpeechBubble key={`esc-${escapes}`} text={ESCAPE_TEXTS[escapes - 1]} centered />
-            )}
-          </AnimatePresence>
+          {/* Centralni speech bubbles SAMO za mobile */}
+          {isMobile && (
+            <>
+              <AnimatePresence>
+                {!caught && bubbleVisible && escapes > 0 && escapes <= ESCAPE_TEXTS.length && (
+                  <SpeechBubble key={`esc-${escapes}`} text={ESCAPE_TEXTS[escapes - 1]} centered />
+                )}
+              </AnimatePresence>
 
-          <AnimatePresence>
-            {canCatch && (
-              <SpeechBubble key="final" text={FINAL_TEXT} permanent centered />
-            )}
-          </AnimatePresence>
+              <AnimatePresence>
+                {!caught && canCatch && (
+                  <SpeechBubble key="final" text={FINAL_TEXT} permanent centered />
+                )}
+              </AnimatePresence>
+            </>
+          )}
 
           {pos && !caught && (
             <motion.div
@@ -546,6 +550,22 @@ export default function Level2_ZakaziTermin({ onNext }) {
               onTouchEnd={handleImageTap}
               whileTap={{ scale: 0.92 }}
             >
+              {/* Speech bubbles za DESKTOP - prate sliku */}
+              {!isMobile && (
+                <>
+                  <AnimatePresence>
+                    {bubbleVisible && escapes > 0 && escapes <= ESCAPE_TEXTS.length && (
+                      <SpeechBubble key={`esc-${escapes}`} text={ESCAPE_TEXTS[escapes - 1]} />
+                    )}
+                  </AnimatePresence>
+
+                  <AnimatePresence>
+                    {canCatch && (
+                      <SpeechBubble key="final" text={FINAL_TEXT} permanent />
+                    )}
+                  </AnimatePresence>
+                </>
+              )}
 
               <img
                 src={tetaImg}
