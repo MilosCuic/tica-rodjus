@@ -9,6 +9,7 @@ import {
   stopSpinnerTicks,
   playWinChime,
 } from "../../utils/sfx";
+import prizeImg from "../../assets/photos/level5.jpeg";
 
 const COLORS = [
   "#e91e8c", "#a855f7", "#3b82f6", "#10b981",
@@ -73,15 +74,22 @@ export default function Level5_RiggedSpin({ onNext }) {
         className="font-body text-sm text-pink-300 uppercase tracking-widest mb-5 font-semibold"
         initial={{ opacity: 0 }} animate={{ opacity: 1 }}
       >
-        ✨ Nivo 5 — Zavrti točak! 🎰
+        ✨ Nivo 5 — Vreme je za nagradu!! 🎰
       </motion.p>
 
       {/* Wheel + button layout: row on desktop, column on mobile */}
       <div className="flex items-center gap-6" style={{ flexDirection: isMobile ? "column" : "row" }}>
 
-        {/* Wheel */}
-        <div className="relative flex items-center justify-center flex-shrink-0"
-          style={{ width: WHEEL_SIZE, height: WHEEL_SIZE }}>
+        {/* Wheel ili slika nagrada */}
+        <AnimatePresence mode="wait">
+          {!revealed ? (
+            <motion.div
+              key="wheel"
+              className="relative flex items-center justify-center flex-shrink-0"
+              style={{ width: WHEEL_SIZE, height: WHEEL_SIZE }}
+              exit={{ scale: 0.8, opacity: 0, rotate: 20 }}
+              transition={{ duration: 0.4 }}
+            >
           {/* Needle */}
           <div className="absolute z-20" style={{
             top: -10, left: "50%", transform: "translateX(-50%)",
@@ -149,7 +157,29 @@ export default function Level5_RiggedSpin({ onNext }) {
             })}
             <circle cx={140} cy={140} r={16} fill="#1a0533" stroke="#ffd700" strokeWidth={3} />
           </motion.svg>
-        </div>
+            </motion.div>
+          ) : (
+            <motion.div
+              key="prize-image"
+              className="relative flex items-center justify-center flex-shrink-0 rounded-3xl overflow-hidden"
+              style={{ 
+                width: WHEEL_SIZE, 
+                height: WHEEL_SIZE,
+                border: "3px solid #ffd700",
+                boxShadow: "0 0 40px rgba(255,215,0,0.4)",
+              }}
+              initial={{ scale: 0, rotate: -180 }}
+              animate={{ scale: 1, rotate: 0 }}
+              transition={{ type: "spring", bounce: 0.5, duration: 0.8 }}
+            >
+              <img
+                src={prizeImg}
+                alt="Nagrada"
+                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* Right side — spin btn or result */}
         <div className="flex flex-col items-center gap-4" style={{ minWidth: 120 }}>
@@ -192,7 +222,7 @@ export default function Level5_RiggedSpin({ onNext }) {
                     lineHeight: 1.3,
                   }}
                 >
-                  Proslava rođendana! 🎂
+                  Najbolja proslava rođendana! 🎂
                 </p>
                 <motion.button
                   className="btn-primary font-body"
