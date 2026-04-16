@@ -7,7 +7,7 @@ import oldImg from "../../assets/photos/old_as_fuck.jpeg";
 const OPTIONS = [
   { id: "A", text: "Previše, moja Slavice 👵" },
   { id: "B", text: "18 🎂" },
-  { id: "C", text: "Manje nego Teodora 😏" },
+  { id: "C", text: "Manje nego teta 😏" },
   { id: "D", text: "Premalo za penziju 💼" },
 ];
 

@@ -61,7 +61,7 @@ export default function Level1_Dobrodoslica({ onNext }) {
               exit={{ scale: 0.8, opacity: 0 }}
               transition={{ type: "spring", bounce: 0.5 }}
             >
-              Ma pravog nindzuuu! 🥷
+              Ma pravog nindžuuu! 🥷
             </motion.div>
           </motion.div>
         )}
@@ -106,7 +106,7 @@ export default function Level1_Dobrodoslica({ onNext }) {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        Pronađi malog od garaže!
+        Pronađi nindžu!
       </motion.h2>
       <motion.p
         className="font-body text-purple-300 mb-10 text-center"

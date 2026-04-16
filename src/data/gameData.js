@@ -97,7 +97,7 @@ export const COMPLIMENTS = [
 
 export const MEMORY_EMOJIS = ["🎂", "🎉", "💕", "🌸", "✨", "🦋", "🎊", "👑"];
 
-export const TYPING_TEXT = "Lagala sam da hodnik smrdi na budj";
+export const TYPING_TEXT = "Dobar dan, moze jedno vozilo";
 
 export const FINALE_MESSAGE =
   "Hvala ti što si deo naše porodice i što svaki dan činiš lepšim. Srećan rodjendan, naša draga Nina! 🎂✨";
