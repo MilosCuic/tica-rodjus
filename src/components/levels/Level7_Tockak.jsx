@@ -6,7 +6,7 @@ import oldImg from "../../assets/photos/old_as_fuck.jpeg";
 
 const OPTIONS = [
   { id: "A", text: "Previše, moja Slavice 👵" },
-  { id: "B", text: "26 🎂" },
+  { id: "B", text: "18 🎂" },
   { id: "C", text: "Manje nego Teodora 😏" },
   { id: "D", text: "Premalo za penziju 💼" },
 ];
@@ -57,7 +57,7 @@ export default function Level7_Pitanje({ onNext }) {
               style={{ border: "1px solid rgba(233,30,140,0.3)", background: "rgba(233,30,140,0.08)" }}
             >
               <p className="font-display text-2xl md:text-3xl font-bold text-white leading-snug">
-                Koliko Tijana puni godina? 🤔
+                Koliko Nina puni godina? 🤔
               </p>
             </div>
 

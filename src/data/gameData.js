@@ -16,7 +16,7 @@ export const THINGS_WE_LOVE = [
   "Tvoja strast prema životu 🎉",
   "Kako si postala neizostavni deo naše porodice 💕",
   "Tvoje snove koje nisi prestala da goniš 🚀",
-  "Što 26 godina nije bila dovoljna da te u potpunosti upoznamo 🎂",
+  "Što 18 godina nije bila dovoljna da te u potpunosti upoznamo 🎂",
   "Tvoja ljubaznost prema strancima 🌼",
   "Kako si uvek tu za svačiji savet 🧠",
   "Tvoja iskrenost koja je retka i vredna 💎",
@@ -31,31 +31,31 @@ export const THINGS_WE_LOVE = [
 
 export const QUIZ_QUESTIONS = [
   {
-    question: "Koliko godina Tijana puni?",
-    options: ["24", "25", "26", "27"],
+    question: "Koliko godina Nina puni?",
+    options: ["16", "17", "18", "19"],
     correct: 2,
     hint: "Pravo je godišnje!",
   },
   {
-    question: "Koji je Tijanin omiljeni godišnji odmor?",
+    question: "Koji je Ninin omiljeni godišnji odmor?",
     options: ["Plaža", "Planina", "Grad", "Kod kuće"],
     correct: 0,
     hint: "Sunce i pesak!",
   },
   {
-    question: "Šta Tijana najčešće naručuje u restoranu?",
+    question: "Šta Nina najčešće naručuje u restoranu?",
     options: ["Picu", "Tjesteninu", "Roštilj", "Salatu"],
     correct: 1,
     hint: "Pasta la vista!",
   },
   {
-    question: "Koji je Tijanin omiljeni film žanr?",
+    question: "Koji je Ninin omiljeni film žanr?",
     options: ["Horor", "Romantika", "Akcija", "Komedija"],
     correct: 3,
     hint: "Smeh je lek!",
   },
   {
-    question: "Šta bi Tijana radila sa slobodnim danom?",
+    question: "Šta bi Nina radila sa slobodnim danom?",
     options: ["Čitala knjige", "Izlazila s prijateljima", "Putovala", "Spavala do podneva"],
     correct: 2,
     hint: "Svet je njen!",
@@ -102,4 +102,4 @@ export const MEMORY_EMOJIS = ["🎂", "🎉", "💕", "🌸", "✨", "🦋", "�
 export const TYPING_TEXT = "Lagala sam da hodnik smrdi na budj";
 
 export const FINALE_MESSAGE =
-  "Hvala ti što si deo naše porodice i što svaki dan činiš lepšim. Srećan rodjendan, naša draga Tijana! 🎂✨";
+  "Hvala ti što si deo naše porodice i što svaki dan činiš lepšim. Srećan rodjendan, naša draga Nina! 🎂✨";

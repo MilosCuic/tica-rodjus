@@ -34,7 +34,7 @@ const COLUMNS = [
   },
 ];
 
-const FINAL_ANSWER = "tijana";
+const FINAL_ANSWER = "nina";
 
 export default function Level4_Asocijacije({ onNext }) {
   const [revealed, setRevealed] = useState(() =>
@@ -292,7 +292,7 @@ export default function Level4_Asocijacije({ onNext }) {
                 border: "2px solid rgba(255,215,0,0.4)",
               }}
             >
-              TIJANA 🎉
+              NINA 🎉
             </div>
             <p className="font-body text-purple-200 mb-6">Sve veze vode do tebe! 💕</p>
             <button className="btn-primary font-body" onClick={onNext}>

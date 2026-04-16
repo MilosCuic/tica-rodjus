@@ -206,7 +206,7 @@ export default function Level6_Seka({ onNext }) {
               className="font-display text-3xl md:text-4xl font-bold text-gradient text-center"
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}
             >
-              Volimo te Tijana! 💕
+              Volimo te Nina! 💕
             </motion.h2>
 
             <PhotoFrame src={seka3} fallbackEmoji="🥰" alt="Seka srećna" />

@@ -62,7 +62,7 @@ export default function LandingPage({ onStart }) {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.3, type: "spring", bounce: 0.4 }}
           >
-            <span className="text-gradient">Tijana</span>
+            <span className="text-gradient">Nina</span>
           </motion.h1>
           <motion.div
             className="flex items-center justify-center gap-3"
@@ -71,7 +71,7 @@ export default function LandingPage({ onStart }) {
             transition={{ delay: 0.7 }}
           >
             <div className="h-px flex-1 max-w-16" style={{ background: "linear-gradient(to right, transparent, #e91e8c)" }} />
-            <span className="text-yellow-300 font-display text-2xl font-bold">26 godina</span>
+            <span className="text-yellow-300 font-display text-2xl font-bold">18 godina</span>
             <div className="h-px flex-1 max-w-16" style={{ background: "linear-gradient(to left, transparent, #e91e8c)" }} />
           </motion.div>
         </div>
