@@ -4,7 +4,7 @@ import Confetti from "react-confetti";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { GIFT, FINALE_MESSAGE } from "../../data/gameData";
 
-const SIGNATORIES = ["Miloš i Teodora ❤️"];
+const SIGNATORIES = ["❤️❤️❤️ Marina ❤️❤️❤️"];
 
 export default function Level12_Finale({ onRestart }) {
   const { width, height } = useWindowSize();
@@ -71,7 +71,7 @@ export default function Level12_Finale({ onRestart }) {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}
         >
-          Tijana 🎊 26 godina
+          Nina 🎊 18 godina
         </motion.div>
 
         <motion.div
@@ -87,7 +87,7 @@ export default function Level12_Finale({ onRestart }) {
         </motion.div>
 
         {/* Gift reminder */}
-        <motion.div
+        {/* <motion.div
           className="card mb-6 py-5 px-8"
           style={{ border: "1px solid rgba(255,215,0,0.4)", background: "rgba(255,215,0,0.06)" }}
           initial={{ opacity: 0, scale: 0.9 }}
@@ -105,7 +105,7 @@ export default function Level12_Finale({ onRestart }) {
               🛍️ Zara vaučer
             </p>
           </div>
-        </motion.div>
+        </motion.div> */}
 
         {/* Signatories */}
         <motion.div

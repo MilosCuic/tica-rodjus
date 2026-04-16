@@ -12,19 +12,21 @@ import f8 from "../../assets/photos/final_8.jpeg";
 import f9 from "../../assets/photos/final_9.jpeg";
 import f10 from "../../assets/photos/final_10.jpeg";
 import f11 from "../../assets/photos/final_11.jpeg";
+import f12 from "../../assets/photos/final_12.jpeg";
 
 const PHOTOS = [
-  { src: f1, caption: "Zaboraviš sve izgovore za teretanu 💪" },
-  { src: f2, caption: "Putujеš na egzotična mesta 🌴" },
-  { src: f3, caption: "Uvek budeš nečija inspiracija 🌟" },
+  { src: f1, caption: "Budeš najbolji lash and lift artist 💅" },
+  { src: f2, caption: "Putuješ na egzotična mesta 🌴" },
+  { src: f3, caption: "Uvek praviš čiz 📸" },
   { src: f4, caption: "Lepo ručaš 🍽️" },
-  { src: f5, caption: "Po malo piješ 🥂" },
-  { src: f6, caption: "Kvalitetno odmаraš 😴" },
-  { src: f7, caption: "Uvek nađeš termin kod frizerke 💇‍♀️" },
-  { src: f8, caption: "Plačeš samo od sreće 😭❤️" },
-  { src: f9, caption: "Pomažeš mami 🤗" },
-  { src: f10, caption: "Naravno i tati 😄" },
-  { src: f11, caption: "I uvek isplivaš iz svih sranja! 🏊‍♀️✨" },
+  { src: f5, caption: "Uvek budeš u udobnoj obući 👟" },
+  { src: f6, caption: "Se lepo naspavaš 😴" },
+  { src: f7, caption: "Uvek dobiješ termin kod tete 💇‍♀️" },
+  { src: f8, caption: "Ti uvek bude toplo 🔥" },
+  { src: f9, caption: "Pomažeš babi 👵" },
+  { src: f10, caption: "I naravno dedi 👴" },
+  { src: f11, caption: "Putuješ samo prvom klasom ✈️" },
+  { src: f12, caption: "I uživaš u svakom danu!!!! 🌟✨" },
 ];
 
 export default function Level11_Galerija({ onNext }) {

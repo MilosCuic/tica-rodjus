@@ -4,7 +4,7 @@ import Confetti from "react-confetti";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { resumeAudio, playScratchTick, playWinChime } from "../../utils/sfx";
 
-const MESSAGE = "Zara vaučer na 6000din!! 🛍️";
+const MESSAGE = "Mesec dana rada kod tete! 🛍️";
 const BIG_EMOJI = "🎁";
 
 export default function Level6_Scratch({ onNext }) {
