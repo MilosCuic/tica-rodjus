@@ -156,25 +156,11 @@ export default function Level1_Dobrodoslica({ onNext }) {
                 ease: "easeInOut",
               } : {}}
             >
-              <div style={{ position: "relative", width: "100%", height: "100%" }}>
-                <img
-                  src={opt.src}
-                  alt=""
-                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                />
-                {/* Prekrij watermark sa providnim overlay-om */}
-                <div
-                  style={{
-                    position: "absolute",
-                    bottom: 0,
-                    right: 0,
-                    width: "40%",
-                    height: "15%",
-                    background: "linear-gradient(135deg, rgba(26,5,51,0.7), rgba(61,10,45,0.7))",
-                    backdropFilter: "blur(8px)",
-                  }}
-                />
-              </div>
+              <img
+                src={opt.src}
+                alt=""
+                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+              />
               {/* Crveni overlay za pogrešne */}
               {isWrong && !answered && (
                 <div
