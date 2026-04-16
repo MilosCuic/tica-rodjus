@@ -250,7 +250,41 @@ function SalonBg({ w, h, isMobile }) {
   );
 }
 
-function SpeechBubble({ text, permanent }) {
+function SpeechBubble({ text, permanent, centered }) {
+  if (centered) {
+    // Centralni bubble (ne vezan za sliku)
+    return (
+      <motion.div
+        key={text}
+        initial={{ opacity: 0, scale: 0.7 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={permanent ? undefined : { opacity: 0, scale: 0.8 }}
+        transition={{ type: "spring", bounce: 0.5, duration: 0.3 }}
+        style={{
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          background: "white",
+          color: "#1a0533",
+          borderRadius: 16,
+          padding: "12px 20px",
+          fontSize: 15,
+          fontWeight: 700,
+          fontFamily: "Poppins, sans-serif",
+          whiteSpace: "nowrap",
+          boxShadow: "0 8px 30px rgba(0,0,0,0.5)",
+          zIndex: 30,
+          maxWidth: "85vw",
+          textAlign: "center",
+        }}
+      >
+        {text}
+      </motion.div>
+    );
+  }
+
+  // Original bubble (iznad slike)
   return (
     <motion.div
       key={text}
@@ -474,6 +508,19 @@ export default function Level2_ZakaziTermin({ onNext }) {
         >
           <SalonBg w={arenaSize.w} h={arenaSize.h} isMobile={isMobile} />
 
+          {/* Centralni speech bubbles */}
+          <AnimatePresence>
+            {bubbleVisible && escapes > 0 && escapes <= ESCAPE_TEXTS.length && (
+              <SpeechBubble key={`esc-${escapes}`} text={ESCAPE_TEXTS[escapes - 1]} centered />
+            )}
+          </AnimatePresence>
+
+          <AnimatePresence>
+            {canCatch && (
+              <SpeechBubble key="final" text={FINAL_TEXT} permanent centered />
+            )}
+          </AnimatePresence>
+
           {pos && !caught && (
             <motion.div
               className="absolute"
@@ -499,19 +546,6 @@ export default function Level2_ZakaziTermin({ onNext }) {
               onTouchEnd={handleImageTap}
               whileTap={{ scale: 0.92 }}
             >
-              {/* Speech bubble — escape texts */}
-              <AnimatePresence>
-                {bubbleVisible && escapes > 0 && escapes <= ESCAPE_TEXTS.length && (
-                  <SpeechBubble key={`esc-${escapes}`} text={ESCAPE_TEXTS[escapes - 1]} />
-                )}
-              </AnimatePresence>
-
-              {/* "Evo ga! Termin za tebe!" bubble — permanent kad može da se uhvati */}
-              <AnimatePresence>
-                {canCatch && (
-                  <SpeechBubble key="final" text={FINAL_TEXT} permanent />
-                )}
-              </AnimatePresence>
 
               <img
                 src={tetaImg}
