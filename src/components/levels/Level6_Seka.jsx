@@ -4,7 +4,6 @@ import { resumeAudio, playPunch, playKiss } from "../../utils/sfx";
 
 import seka1 from "../../assets/photos/seka1.jpeg";
 import seka2 from "../../assets/photos/seka2.jpeg";
-import seka3 from "../../assets/photos/seka3.jpeg";
 
 const HEARTS = ["❤️", "💕", "💖", "💗", "💓", "💝", "🩷", "💞"];
 
@@ -59,26 +58,20 @@ function PhotoFrame({ src, fallbackEmoji, alt }) {
 }
 
 export default function Level6_Seka({ onNext }) {
-  const [stage, setStage] = useState("punch"); // punch | kissPrompt | kiss | done
-  const [punching, setPunching] = useState(false);
-  const [showHearts, setShowHearts] = useState(false);
+  const [stage, setStage] = useState("makeup"); // makeup | done
+  const [applying, setApplying] = useState(false);
+  const [showSparkles, setShowSparkles] = useState(false);
 
-  const handlePunch = async () => {
-    if (punching) return;
+  const handleMakeup = async () => {
+    if (applying) return;
     await resumeAudio();
-    playPunch();
-    setPunching(true);
+    playKiss(); // Koristimo "kiss" zvuk za "šminkanje"
+    setApplying(true);
     setTimeout(() => {
-      setPunching(false);
-      setStage("kissPrompt");
-    }, 900);
-  };
-
-  const handleKiss = async () => {
-    await resumeAudio();
-    playKiss();
-    setShowHearts(true);
-    setTimeout(() => setStage("done"), 400);
+      setApplying(false);
+      setShowSparkles(true);
+      setStage("done");
+    }, 1200);
   };
 
   return (
@@ -86,7 +79,7 @@ export default function Level6_Seka({ onNext }) {
       className="min-h-screen flex flex-col items-center justify-center px-4 level-transition"
       style={{ paddingTop: 64, paddingBottom: 72, gap: 24 }}
     >
-      {showHearts && <FloatingHearts />}
+      {showSparkles && <FloatingHearts />}
 
       <motion.p
         className="font-body text-pink-300 text-sm uppercase tracking-widest font-semibold"
@@ -97,10 +90,10 @@ export default function Level6_Seka({ onNext }) {
 
       <AnimatePresence mode="wait">
 
-        {/* STAGE 1: Udari seku */}
-        {stage === "punch" && (
+        {/* STAGE 1: Nasminkaj */}
+        {stage === "makeup" && (
           <motion.div
-            key="punch"
+            key="makeup"
             className="flex flex-col items-center gap-6"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -111,15 +104,15 @@ export default function Level6_Seka({ onNext }) {
               className="font-display text-3xl md:text-4xl font-bold text-gradient text-center"
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.15 }}
             >
-              Udari seku jednom! 👊
+              Nasminkaj Ninu! 💄
             </motion.h2>
 
-            <PhotoFrame src={seka1} fallbackEmoji="👩" alt="Seka" />
+            <PhotoFrame src={seka1} fallbackEmoji="👩" alt="Nina pre šminke" />
 
-            {/* Boxing glove button */}
+            {/* Makeup brush button */}
             <motion.button
-              onClick={handlePunch}
-              disabled={punching}
+              onClick={handleMakeup}
+              disabled={applying}
               className="relative flex items-center justify-center"
               style={{
                 width: 100, height: 100,
@@ -128,72 +121,35 @@ export default function Level6_Seka({ onNext }) {
                 boxShadow: "0 0 30px #e91e8c88",
                 fontSize: "3rem",
                 border: "none",
-                cursor: punching ? "default" : "pointer",
+                cursor: applying ? "default" : "pointer",
               }}
-              whileHover={!punching ? { scale: 1.1 } : {}}
-              whileTap={!punching ? { scale: 0.88 } : {}}
-              animate={punching ? {
-                x: [0, 60, -10, 0],
-                rotate: [0, -15, 5, 0],
-                scale: [1, 1.3, 0.95, 1],
+              whileHover={!applying ? { scale: 1.1 } : {}}
+              whileTap={!applying ? { scale: 0.88 } : {}}
+              animate={applying ? {
+                rotate: [0, -15, 15, -10, 10, 0],
+                scale: [1, 1.1, 1.05, 1.1, 1.05, 1],
               } : {}}
-              transition={punching ? { duration: 0.5, ease: "easeInOut" } : {}}
+              transition={applying ? { duration: 1, ease: "easeInOut" } : {}}
             >
-              🥊
-              {punching && (
+              💄
+              {applying && (
                 <motion.span
                   className="absolute"
                   style={{ fontSize: "2rem", top: -10, right: -10 }}
                   initial={{ opacity: 0, scale: 0 }}
-                  animate={{ opacity: [0, 1, 0], scale: [0, 1.5, 0] }}
-                  transition={{ duration: 0.5 }}
+                  animate={{ opacity: [0, 1, 1, 0], scale: [0, 1.2, 1.2, 0] }}
+                  transition={{ duration: 1 }}
                 >
-                  💥
+                  ✨
                 </motion.span>
               )}
             </motion.button>
 
-            <p className="font-body text-purple-400 text-sm">Tapni rukavicu!</p>
+            <p className="font-body text-purple-400 text-sm">Tapni četkicu! 💅</p>
           </motion.div>
         )}
 
-        {/* STAGE 2: Seka2 + Poljubi seku */}
-        {stage === "kissPrompt" && (
-          <motion.div
-            key="kissPrompt"
-            className="flex flex-col items-center gap-6"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ type: "spring", bounce: 0.3 }}
-          >
-            <motion.h2
-              className="font-display text-3xl md:text-4xl font-bold text-gradient text-center"
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-            >
-              Auuu! 😲
-            </motion.h2>
-
-            <PhotoFrame src={seka2} fallbackEmoji="😲" alt="Seka reakcija" />
-
-            <motion.button
-              onClick={handleKiss}
-              className="btn-primary font-body text-xl flex items-center gap-3"
-              style={{ padding: "14px 32px", fontSize: "1.2rem" }}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, type: "spring" }}
-              whileHover={{ scale: 1.07 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              💋 Poljubi seku!
-            </motion.button>
-          </motion.div>
-        )}
-
-        {/* STAGE 3: Seka3 + srca + dalje */}
+        {/* STAGE 2: Nasminkana Nina */}
         {stage === "done" && (
           <motion.div
             key="done"
@@ -206,16 +162,25 @@ export default function Level6_Seka({ onNext }) {
               className="font-display text-3xl md:text-4xl font-bold text-gradient text-center"
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}
             >
-              Volimo te Nina! 💕
+              Savršeno! 💖
             </motion.h2>
 
-            <PhotoFrame src={seka3} fallbackEmoji="🥰" alt="Seka srećna" />
+            <PhotoFrame src={seka2} fallbackEmoji="✨" alt="Nina nasminkana" />
+
+            <motion.p
+              className="font-body text-purple-200 text-center text-lg"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.4 }}
+            >
+              Nina izgleda prelepo! 💄✨
+            </motion.p>
 
             <motion.button
               className="btn-primary font-body"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
+              transition={{ delay: 0.6 }}
               onClick={onNext}
             >
               Sledeći Nivo →
