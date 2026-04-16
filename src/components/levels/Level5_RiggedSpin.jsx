@@ -178,20 +178,21 @@ export default function Level5_RiggedSpin({ onNext }) {
                 animate={{ opacity: 1, scale: 1, x: 0 }}
                 transition={{ type: "spring", bounce: 0.5, delay: 0.3 }}
               >
-                <div className="text-5xl">💰</div>
+                <div className="text-5xl">🎉</div>
                 <p className="font-body text-pink-300 text-xs uppercase tracking-widest font-semibold">
-                  Osvojila si:
+                  Čestitamo!
                 </p>
                 <p
                   className="font-display font-black"
                   style={{
-                    fontSize: "clamp(1.6rem, 5vw, 2.5rem)",
+                    fontSize: "clamp(1.4rem, 4.5vw, 2.2rem)",
                     background: "linear-gradient(135deg, #ffd700, #e91e8c)",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
+                    lineHeight: 1.3,
                   }}
                 >
-                  150e 🎉
+                  Proslava rođendana! 🎂
                 </p>
                 <motion.button
                   className="btn-primary font-body"

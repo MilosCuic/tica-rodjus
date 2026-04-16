@@ -63,16 +63,14 @@ export const QUIZ_QUESTIONS = [
 ];
 
 export const SPINNER_OPTIONS_1 = [
+  "Proslava rodjendana",
   "Odlazak u teretanu",
-  "Spremanje kuce",
-  "150e",
-  "Zara vaucer",
-  "Planinarenje",
-  "Kurs Engleskog",
-  "Odlazak u lov",
-  "Spa slavice",
+  "Pomaganje teti u salonu",
+  "Ustajanje u 9",
+  "Kuvanje rucka",
+  "Spremanje Kuce",
 ];
-export const WINNING_INDEX_1 = 2; // "150e" je na indeksu 2
+export const WINNING_INDEX_1 = 0; // "Proslava rodjendana" je na indeksu 0
 
 export const SPINNER_OPTIONS_2 = [
   "Čokolade",
