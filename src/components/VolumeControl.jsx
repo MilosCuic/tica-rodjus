@@ -73,9 +73,9 @@ export default function VolumeControl({ gainNodeRef }) {
         </span>
       </motion.button>
 
-      {/* Volume slider - uvek vidljiv na mobilnom, hover na desktopu */}
+      {/* Volume slider - SAMO na desktopu (hover) */}
       <AnimatePresence>
-        {(isMobile || showSlider) && (
+        {!isMobile && showSlider && (
           <motion.div
             className="flex items-center gap-2 px-3 py-2 rounded-full"
             style={{
