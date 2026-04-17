@@ -16,7 +16,7 @@ export default function LandingPage({ onStart }) {
       <StarsBg />
 
       <div className="relative z-10 flex flex-col items-center text-center gap-8 py-20">
-        {/* Photos row */}
+        {/* Photos row - responsive layout */}
         <motion.div
           className="flex gap-4 mb-2"
           initial={{ opacity: 0, y: -30 }}
@@ -28,10 +28,13 @@ export default function LandingPage({ onStart }) {
               key={p.id}
               className="rounded-2xl overflow-hidden shadow-2xl"
               style={{
-                width: i === 1 ? 200 : 160,
-                height: i === 1 ? 260 : 210,
+                // Desktop: original sizes, Mobile: adjusted sizes and positions
+                width: i === 1 ? "clamp(140px, 40vw, 200px)" : "clamp(120px, 30vw, 160px)",
+                height: i === 1 ? "clamp(180px, 50vw, 260px)" : "clamp(160px, 40vw, 210px)",
                 border: "2px solid rgba(233,30,140,0.4)",
                 flexShrink: 0,
+                // Na mobilnom, slike 1 i 3 spuštene više ka sredini
+                marginTop: window.innerWidth < 768 && i !== 1 ? "40px" : "0",
               }}
               animate={{ y: [0, i % 2 === 0 ? -8 : 8, 0] }}
               transition={{ duration: 3 + i * 0.5, repeat: Infinity, ease: "easeInOut" }}
@@ -39,25 +42,32 @@ export default function LandingPage({ onStart }) {
               <img
                 src={p.src}
                 alt=""
-                style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }}
+                style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }}
               />
             </motion.div>
           ))}
         </motion.div>
 
+        {/* "Srećan Rođendan" text - IZNAD srednje slike na mobilnom */}
+        <motion.p
+          className="text-pink-300 font-body font-semibold text-sm tracking-[0.3em] uppercase order-first md:order-none"
+          style={{ 
+            position: window.innerWidth < 768 ? "absolute" : "static",
+            top: window.innerWidth < 768 ? "120px" : "auto",
+            zIndex: 20,
+          }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+        >
+          ✨ Srećan Rodjendan ✨
+        </motion.p>
+
         {/* Title */}
-        <div>
-          <motion.p
-            className="text-pink-300 font-body font-semibold text-sm tracking-[0.3em] uppercase mb-3"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
-          >
-            ✨ Srećan Rodjendan ✨
-          </motion.p>
+        <div className="-mt-4">
           <motion.h1
             className="font-display font-black leading-none mb-2"
-            style={{ fontSize: "clamp(3rem, 10vw, 6rem)" }}
+            style={{ fontSize: "clamp(2.5rem, 9vw, 6rem)" }}
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.3, type: "spring", bounce: 0.4 }}
@@ -71,7 +81,9 @@ export default function LandingPage({ onStart }) {
             transition={{ delay: 0.7 }}
           >
             <div className="h-px flex-1 max-w-16" style={{ background: "linear-gradient(to right, transparent, #e91e8c)" }} />
-            <span className="text-yellow-300 font-display text-2xl font-bold">18 godina</span>
+            <span className="text-yellow-300 font-display font-bold" style={{ fontSize: "clamp(1rem, 5vw, 1.5rem)" }}>
+              18 godina
+            </span>
             <div className="h-px flex-1 max-w-16" style={{ background: "linear-gradient(to left, transparent, #e91e8c)" }} />
           </motion.div>
         </div>
