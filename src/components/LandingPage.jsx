@@ -50,11 +50,12 @@ export default function LandingPage({ onStart }) {
 
         {/* "Srećan Rođendan" text - IZNAD srednje slike na mobilnom */}
         <motion.p
-          className="text-pink-300 font-body font-semibold text-sm tracking-[0.3em] uppercase order-first md:order-none"
+          className="text-pink-300 font-body font-semibold tracking-[0.3em] uppercase order-first md:order-none"
           style={{ 
             position: window.innerWidth < 768 ? "absolute" : "static",
-            top: window.innerWidth < 768 ? "120px" : "auto",
+            top: window.innerWidth < 768 ? "60px" : "auto",
             zIndex: 20,
+            fontSize: window.innerWidth < 768 ? "0.7rem" : "0.875rem",
           }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -75,16 +76,16 @@ export default function LandingPage({ onStart }) {
             <span className="text-gradient">Nina</span>
           </motion.h1>
           <motion.div
-            className="flex items-center justify-center gap-3"
+            className="flex items-center justify-center gap-2 md:gap-3"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.7 }}
           >
-            <div className="h-px flex-1 max-w-16" style={{ background: "linear-gradient(to right, transparent, #e91e8c)" }} />
+            <div className="h-px flex-1" style={{ maxWidth: "clamp(40px, 10vw, 64px)", background: "linear-gradient(to right, transparent, #e91e8c)" }} />
             <span className="text-yellow-300 font-display font-bold" style={{ fontSize: "clamp(1rem, 5vw, 1.5rem)" }}>
               18 godina
             </span>
-            <div className="h-px flex-1 max-w-16" style={{ background: "linear-gradient(to left, transparent, #e91e8c)" }} />
+            <div className="h-px flex-1" style={{ maxWidth: "clamp(40px, 10vw, 64px)", background: "linear-gradient(to left, transparent, #e91e8c)" }} />
           </motion.div>
         </div>
 
